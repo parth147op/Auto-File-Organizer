@@ -1,0 +1,10 @@
+{
+    "file_types": {
+        "images": [".jpg", ".png", ".jpeg", ".gif", ".bmp"],
+        "documents": [".doc", ".docx", ".txt", ".pdf", ".xlsx", ".xls", ".ppt", ".pptx"],
+        "videos": [".mp4", ".mkv", ".flv", ".mpeg", ".avi"],
+        "apps": [".exe", ".dmg", ".apk", ".jar", ".lnk"],
+        "zips": [".zip", ".rar", ".7z", ".tar.gz"]
+    },
+    "watch_directory": "C:/Users/parth/Desktop/Dry-Run"
+}

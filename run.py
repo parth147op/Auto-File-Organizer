@@ -16,7 +16,7 @@ def organize_files(directory):
         'documents': ['.doc', '.docx', '.txt', '.pdf', '.xlsx', '.xls', '.ppt', '.pptx'],
         'videos': ['.mp4', '.mkv', '.flv', '.mpeg', '.avi'],
         'apps': ['.exe', '.dmg', '.apk', '.jar'],
-        'zips': ['.zip', '.rar', '.7z', '.tar.gz'],
+        'zips': ['.zip', '.rar', '.7z', '.tar.gz']
     }
 
     for file in os.listdir(directory):
