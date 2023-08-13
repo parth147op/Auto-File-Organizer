@@ -1,24 +1,27 @@
 import os
 import shutil
 import time
+import logging
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
+# Configure logging
+logging.basicConfig(filename='file_organizer.log', level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
+
+
 def organize_files(directory):
-    # List all file types you want to sort
     file_types = {
         'images': ['.jpg', '.png', '.jpeg', '.gif', '.bmp'],
         'documents': ['.doc', '.docx', '.txt', '.pdf', '.xlsx', '.xls', '.ppt', '.pptx'],
         'videos': ['.mp4', '.mkv', '.flv', '.mpeg', '.avi'],
-        'apps': ['.exe', '.dmg', '.apk', '.jar'],  # Applications
-        'zips': ['.zip', '.rar', '.7z', '.tar.gz'],  # Zip files
-        # You can add more file types as you need
+        'apps': ['.exe', '.dmg', '.apk', '.jar'],
+        'zips': ['.zip', '.rar', '.7z', '.tar.gz'],
     }
 
     for file in os.listdir(directory):
         file_path = os.path.join(directory, file)
 
-        # Make sure we're not creating folders for folders
         if not os.path.isfile(file_path):
             continue
 
@@ -33,15 +36,18 @@ def organize_files(directory):
                     os.makedirs(folder_path)
 
                 # Move the file
-                shutil.move(file_path, os.path.join(folder_path, file))
-
-# Run the function on a directory
+                destination_path = os.path.join(folder_path, file)
+                try:
+                    shutil.move(file_path, destination_path)
+                    logging.info(f"Moved {file_path} to {destination_path}")
+                except Exception as e:
+                    logging.error(f"Error moving {file_path} to {destination_path}. Error: {e}")
 
 
 class MyHandler(FileSystemEventHandler):
     def on_modified(self, event):
-        # Here we'll call the function to re-organize the files
         organize_files("C:/Users/parth/Downloads")
+
 
 if __name__ == "__main__":
     event_handler = MyHandler()
@@ -53,5 +59,7 @@ if __name__ == "__main__":
         while True:
             time.sleep(1)
     except KeyboardInterrupt:
+        logging.info("Observer stopped by user.")
         observer.stop()
     observer.join()
+    logging.info("Observer thread has terminated.")
